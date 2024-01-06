@@ -34,4 +34,11 @@ describe('Suite de manipulação de Heróis', () => {
 
 		deepEqual(heroi, expected);
 	});
+
+	it('deve remover o herói pelo id, usando arquivos', async () => {
+		const expected = true;
+		const resultado = await db.remover(DEFAULT_ITEM_CADASTRAR.id);
+
+		deepEqual(resultado, expected);
+	});
 });
