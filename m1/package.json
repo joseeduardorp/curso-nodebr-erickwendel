@@ -1,8 +1,8 @@
 {
-  "name": "m1-a7",
+  "name": "m1",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "a3.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
