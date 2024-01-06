@@ -1,7 +1,4 @@
 [
-	{
-		"id": 1,
-		"nome": "Homem de Ferro",
-		"poder": "Super Força e Voo"
-	}
+	{ "id": 1, "nome": "Homem de Ferro", "poder": "Super Força e Voo" },
+	{ "id": 2, "nome": "Hulk", "poder": "Super Força" }
 ]
