@@ -55,8 +55,8 @@ describe('Suite de manipulação de Heróis', () => {
 		};
 
 		const expected = {
-			...novosDados,
 			...DEFAULT_ITEM_ATUALIZAR,
+			...novosDados,
 		};
 
 		await db.atualizar(DEFAULT_ITEM_ATUALIZAR.id, novosDados);
