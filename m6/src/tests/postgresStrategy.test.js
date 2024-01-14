@@ -27,4 +27,11 @@ describe('Postgres Strategy', function () {
 
 		assert.deepEqual(result, MOCK_HEROI_CADASTRAR);
 	});
+
+	it('Listar herói', async () => {
+		const [result] = await context.read({ nome: MOCK_HEROI_CADASTRAR.nome });
+		delete result.id;
+
+		assert.deepEqual(result, MOCK_HEROI_CADASTRAR);
+	});
 });
