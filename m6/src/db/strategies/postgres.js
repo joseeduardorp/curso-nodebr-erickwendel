@@ -73,6 +73,12 @@ class Postgres extends ICrud {
 
 		return result;
 	}
+
+	async update(id, data) {
+		const success = await this._herois.update(data, { where: { id: id } });
+
+		return success;
+	}
 }
 
 module.exports = Postgres;
