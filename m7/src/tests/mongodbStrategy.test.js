@@ -4,6 +4,11 @@ const Context = require('../db/strategies/base/contextStrategy');
 
 const context = new Context(new MongoDB());
 
+const MOCK_HEROI_CADASTRAR = {
+	nome: 'Mulher Maravilha',
+	poder: 'Laço',
+};
+
 describe('MongoDB Strategy', function () {
 	this.timeout(Infinity);
 
@@ -16,5 +21,11 @@ describe('MongoDB Strategy', function () {
 		const expected = 'Conectado';
 
 		assert.deepEqual(result, expected);
+	});
+
+	it('Cadastrar herói', async () => {
+		const { nome, poder } = await context.create(MOCK_HEROI_CADASTRAR);
+
+		assert.deepEqual({ nome, poder }, MOCK_HEROI_CADASTRAR);
 	});
 });

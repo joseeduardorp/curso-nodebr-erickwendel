@@ -26,6 +26,7 @@ class MongoDB extends ICrud {
 
 		this._connection = Mongoose.connection;
 		this._connection.once('open', () => console.log('Conectado com sucesso!'));
+		this.defineModel();
 	}
 
 	async isConnected() {
@@ -58,11 +59,9 @@ class MongoDB extends ICrud {
 	}
 
 	async create(item) {
-		const resultCadastrar = await this._herois.create({
-			nome: 'Batman',
-			poder: 'Dinheiro',
-		});
-		console.log('result cadastrar', resultCadastrar);
+		const data = await this._herois.create(item);
+
+		return data;
 	}
 }
 
