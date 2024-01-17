@@ -57,4 +57,10 @@ describe('MongoDB Strategy', function () {
 
 		assert.deepEqual(result.modifiedCount, 1);
 	});
+
+	it('Remover herói', async () => {
+		const result = await context.delete(MOCK_HEROI_ID);
+
+		assert.deepEqual(result.deletedCount, 1);
+	});
 });

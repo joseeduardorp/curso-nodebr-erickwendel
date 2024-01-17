@@ -75,6 +75,12 @@ class MongoDB extends ICrud {
 
 		return result;
 	}
+
+	async delete(id) {
+		const result = await this._herois.deleteOne({ _id: id });
+
+		return result;
+	}
 }
 
 module.exports = MongoDB;
