@@ -3,8 +3,6 @@ const MongoDB = require('../db/strategies/mongodb/mongodb');
 const HeroiSchema = require('../db/strategies/mongodb/schemas/heroisSchema');
 const Context = require('../db/strategies/base/contextStrategy');
 
-let context = {};
-
 const MOCK_HEROI_CADASTRAR = {
 	nome: 'Mulher Maravilha',
 	poder: 'Laço',
@@ -18,6 +16,8 @@ const MOCK_HEROI_ATUALIZAR = {
 	poder: 'Velocidade',
 };
 let MOCK_HEROI_ID = null;
+
+let context = {};
 
 describe('MongoDB Strategy', function () {
 	this.timeout(Infinity);
