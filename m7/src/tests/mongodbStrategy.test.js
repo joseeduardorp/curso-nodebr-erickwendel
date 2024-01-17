@@ -12,6 +12,11 @@ const MOCK_HEROI_DEFAULT = {
 	nome: `Aquaman-${Date.now()}`,
 	poder: 'Respiração aquática',
 };
+const MOCK_HEROI_ATUALIZAR = {
+	nome: `Flash-${Date.now()}`,
+	poder: 'Velocidade',
+};
+let MOCK_HEROI_ID = null;
 
 describe('MongoDB Strategy', function () {
 	this.timeout(Infinity);
@@ -19,6 +24,8 @@ describe('MongoDB Strategy', function () {
 	this.beforeAll(async () => {
 		await context.connect();
 		await context.create(MOCK_HEROI_DEFAULT);
+		const result = await context.create(MOCK_HEROI_ATUALIZAR);
+		MOCK_HEROI_ID = result._id;
 	});
 
 	it('MongoDB connection', async () => {
@@ -41,5 +48,13 @@ describe('MongoDB Strategy', function () {
 		const result = { nome, poder };
 
 		assert.deepEqual(result, MOCK_HEROI_DEFAULT);
+	});
+
+	it('Atualizar herói', async () => {
+		const result = await context.update(MOCK_HEROI_ID, {
+			nome: 'Savitar',
+		});
+
+		assert.deepEqual(result.modifiedCount, 1);
 	});
 });
