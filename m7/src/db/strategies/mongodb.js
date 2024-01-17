@@ -55,11 +55,17 @@ class MongoDB extends ICrud {
 			},
 		});
 
-		this._herois = Mongoose.model('herois', heroiSchema);
+		this._herois = Mongoose.model('heroes', heroiSchema);
 	}
 
 	async create(item) {
 		const data = await this._herois.create(item);
+
+		return data;
+	}
+
+	async read(query, skip = 0, limit = 10) {
+		const data = await this._herois.find(query).skip(skip).limit(limit);
 
 		return data;
 	}
