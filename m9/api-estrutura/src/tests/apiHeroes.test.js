@@ -37,14 +37,26 @@ describe('Suite de testes da API Heroes', function () {
 
 	it('Listar heróis, deve retornar um erro - /herois', async () => {
 		const TAMANHO_LIMITE = 'tipo_invalido';
+		const ERROR_RESULT = {
+			statusCode: 400,
+			error: 'Bad Request',
+			message: '"limit" must be a number',
+			validation: {
+				source: 'query',
+				keys: ['limit'],
+			},
+		};
+
 		const result = await app.inject({
 			method: 'GET',
 			url: `/herois?skip=0&limit=${TAMANHO_LIMITE}`,
 		});
 
-		const response = result.payload;
+		const statusCode = result.statusCode;
+		const payload = JSON.parse(result.payload);
 
-		assert.deepEqual(response, 'Erro interno no servidor');
+		assert.deepEqual(statusCode, ERROR_RESULT.statusCode);
+		assert.deepEqual(payload, ERROR_RESULT);
 	});
 
 	it('Listar heróis, deve filtrar um item - Listar heróis', async () => {

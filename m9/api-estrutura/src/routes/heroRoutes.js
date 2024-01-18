@@ -1,3 +1,5 @@
+const Joi = require('joi');
+
 const BaseRoute = require('./base/baseRoute');
 
 class HeroRoutes extends BaseRoute {
@@ -10,18 +12,25 @@ class HeroRoutes extends BaseRoute {
 		return {
 			path: '/herois',
 			method: 'GET',
+			options: {
+				validate: {
+					failAction: (request, response, error) => {
+						throw error;
+					},
+					query: Joi.object({
+						skip: Joi.number().integer().default(0),
+						limit: Joi.number().integer().default(10),
+						nome: Joi.string().min(3).max(100),
+					}),
+				},
+			},
 			handler: (request, headers) => {
 				try {
 					const { skip, limit, nome } = request.query;
 
-					let query = {};
-					if (nome) query.nome = nome;
+					let query = nome ? { nome: { $regex: `.*${nome}*.` } } : {};
 
-					if (isNaN(skip)) throw Error('Tipo do parâmetro skip incorreto');
-
-					if (isNaN(limit)) throw Error('Tipo do parâmetro limit incorreto');
-
-					return this.db.read(query, parseInt(skip), parseInt(limit));
+					return this.db.read(query, skip, limit);
 				} catch (error) {
 					console.error('Ocorreu um erro', error);
 					return 'Erro interno no servidor';
