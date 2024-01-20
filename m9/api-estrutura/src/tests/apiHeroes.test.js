@@ -139,10 +139,41 @@ describe('Suite de testes da API Heroes', function () {
 		});
 
 		const statusCode = result.statusCode;
-		const { message } = JSON.parse(result.payload);
+		const dados = JSON.parse(result.payload);
 
-		assert.ok(statusCode === 200);
-		assert.deepEqual(message, 'Não foi possível atualizar!');
+		const expected = {
+			statusCode: 412,
+			error: 'Precondition Failed',
+			message: 'ID não encontrado no banco de dados',
+		};
+
+		assert.ok(statusCode === 412);
+		assert.deepEqual(dados, expected);
+	});
+
+	it('Atualizar heróis, deve retornar um erro ao tentar atualizar com id inválido - /herois/:id', async () => {
+		const heroi_id = 'id_invalido';
+		const novosDados = {
+			poder: 'Super Mira',
+		};
+
+		const result = await app.inject({
+			method: 'PATCH',
+			url: `/herois/${heroi_id}`,
+			payload: novosDados,
+		});
+
+		const statusCode = result.statusCode;
+		const dados = JSON.parse(result.payload);
+
+		const expected = {
+			statusCode: 500,
+			error: 'Internal Server Error',
+			message: 'An internal server error occurred',
+		};
+
+		assert.ok(statusCode === 500);
+		assert.deepEqual(dados, expected);
 	});
 
 	it('Remover heróis, deve remover um herói - /herois/:id', async () => {
@@ -169,9 +200,36 @@ describe('Suite de testes da API Heroes', function () {
 		});
 
 		const statusCode = result.statusCode;
-		const { message } = JSON.parse(result.payload);
+		const dados = JSON.parse(result.payload);
 
-		assert.ok(statusCode === 200);
-		assert.deepEqual(message, 'Não foi possível remover o herói!');
+		const expected = {
+			statusCode: 412,
+			error: 'Precondition Failed',
+			message: 'ID não encontrado no banco de dados',
+		};
+
+		assert.ok(statusCode === 412);
+		assert.deepEqual(dados, expected);
+	});
+
+	it('Remover heróis, deve retornar um erro ao tentar remover com id inválido - /herois/:id', async () => {
+		const heroi_id = 'id_invalido';
+
+		const result = await app.inject({
+			method: 'DELETE',
+			url: `/herois/${heroi_id}`,
+		});
+
+		const statusCode = result.statusCode;
+		const dados = JSON.parse(result.payload);
+
+		const expected = {
+			statusCode: 500,
+			error: 'Internal Server Error',
+			message: 'An internal server error occurred',
+		};
+
+		assert.ok(statusCode === 500);
+		assert.deepEqual(dados, expected);
 	});
 });

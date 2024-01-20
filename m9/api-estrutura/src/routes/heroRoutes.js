@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const Boom = require('@hapi/boom');
 
 const BaseRoute = require('./base/baseRoute');
 
@@ -34,8 +35,8 @@ class HeroRoutes extends BaseRoute {
 
 					return this.db.read(query, skip, limit);
 				} catch (error) {
-					console.error('Ocorreu um erro', error);
-					return 'Erro interno no servidor';
+					// console.error('Ocorreu um erro', error);
+					return Boom.internal();
 				}
 			},
 		};
@@ -64,8 +65,8 @@ class HeroRoutes extends BaseRoute {
 						_id: result._id,
 					};
 				} catch (error) {
-					console.error('Ocorreu um erro', error);
-					return 'Erro interno no servidor';
+					// console.error('Ocorreu um erro', error);
+					return Boom.internal();
 				}
 			},
 		};
@@ -97,17 +98,17 @@ class HeroRoutes extends BaseRoute {
 					const result = await this.db.update(id, dados);
 
 					if (result.modifiedCount !== 1) {
-						return {
-							message: 'Não foi possível atualizar!',
-						};
+						return Boom.preconditionFailed(
+							'ID não encontrado no banco de dados'
+						);
 					}
 
 					return {
 						message: 'Herói atualizado com sucesso!',
 					};
 				} catch (error) {
-					console.error('Ocorreu um erro', error);
-					return 'Erro interno no servidor';
+					// console.error('Ocorreu um erro', error);
+					return Boom.internal();
 				}
 			},
 		};
@@ -132,17 +133,17 @@ class HeroRoutes extends BaseRoute {
 					const result = await this.db.delete(id);
 
 					if (result.deletedCount !== 1) {
-						return {
-							message: 'Não foi possível remover o herói!',
-						};
+						return Boom.preconditionFailed(
+							'ID não encontrado no banco de dados'
+						);
 					}
 
 					return {
 						message: 'Herói removido com sucesso!',
 					};
 				} catch (error) {
-					console.error('Ocorreu um erro', error);
-					return 'Erro interno no servidor';
+					// console.error('Ocorreu um erro', error);
+					return Boom.internal();
 				}
 			},
 		};
