@@ -2,6 +2,10 @@ const Joi = require('joi');
 
 const BaseRoute = require('./base/baseRoute');
 
+const failAction = (request, response, error) => {
+	throw error;
+};
+
 class HeroRoutes extends BaseRoute {
 	constructor(db) {
 		super();
@@ -14,9 +18,7 @@ class HeroRoutes extends BaseRoute {
 			method: 'GET',
 			options: {
 				validate: {
-					failAction: (request, response, error) => {
-						throw error;
-					},
+					failAction,
 					query: Joi.object({
 						skip: Joi.number().integer().default(0),
 						limit: Joi.number().integer().default(10),
@@ -31,6 +33,36 @@ class HeroRoutes extends BaseRoute {
 					let query = nome ? { nome: { $regex: `.*${nome}*.` } } : {};
 
 					return this.db.read(query, skip, limit);
+				} catch (error) {
+					console.error('Ocorreu um erro', error);
+					return 'Erro interno no servidor';
+				}
+			},
+		};
+	}
+
+	create() {
+		return {
+			path: '/herois',
+			method: 'POST',
+			options: {
+				validate: {
+					failAction,
+					payload: Joi.object({
+						nome: Joi.string().required().min(3).max(100),
+						poder: Joi.string().required().min(2).max(100),
+					}),
+				},
+			},
+			handler: async (request, response) => {
+				try {
+					const { nome, poder } = request.payload;
+					const result = await this.db.create({ nome, poder });
+
+					return {
+						message: 'Herói cadastrado com sucesso!',
+						_id: result._id,
+					};
 				} catch (error) {
 					console.error('Ocorreu um erro', error);
 					return 'Erro interno no servidor';
