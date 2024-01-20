@@ -13,7 +13,7 @@ const MOCK_HEROI_INICIAL = {
 };
 let MOCK_ID = null;
 
-describe.only('Suite de testes da API Heroes', function () {
+describe('Suite de testes da API Heroes', function () {
 	this.beforeAll(async () => {
 		app = await api;
 
@@ -143,5 +143,35 @@ describe.only('Suite de testes da API Heroes', function () {
 
 		assert.ok(statusCode === 200);
 		assert.deepEqual(message, 'Não foi possível atualizar!');
+	});
+
+	it('Remover heróis, deve remover um herói - /herois/:id', async () => {
+		const heroi_id = MOCK_ID;
+
+		const result = await app.inject({
+			method: 'DELETE',
+			url: `/herois/${heroi_id}`,
+		});
+
+		const statusCode = result.statusCode;
+		const { message } = JSON.parse(result.payload);
+
+		assert.ok(statusCode === 200);
+		assert.deepEqual(message, 'Herói removido com sucesso!');
+	});
+
+	it('Remover heróis, deve retornar um erro ao tentar remover - /herois/:id', async () => {
+		const heroi_id = '65a9b187c3b2a665405dd55d';
+
+		const result = await app.inject({
+			method: 'DELETE',
+			url: `/herois/${heroi_id}`,
+		});
+
+		const statusCode = result.statusCode;
+		const { message } = JSON.parse(result.payload);
+
+		assert.ok(statusCode === 200);
+		assert.deepEqual(message, 'Não foi possível remover o herói!');
 	});
 });
