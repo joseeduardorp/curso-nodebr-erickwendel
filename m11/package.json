@@ -1,0 +1,29 @@
+{
+	"name": "api-jwt",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "mocha src/tests/*.test.js",
+		"test:watch": "mocha src/tests/*.test.js -w"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@hapi/boom": "^10.0.1",
+		"@hapi/hapi": "^21.3.2",
+		"@hapi/inert": "^7.1.0",
+		"@hapi/vision": "^7.0.3",
+		"hapi-auth-jwt2": "^10.5.0",
+		"hapi-swagger": "^17.2.0",
+		"joi": "^17.12.0",
+		"jsonwebtoken": "^9.0.2",
+		"mongoose": "^8.1.0",
+		"pg": "^8.11.3",
+		"pg-hstore": "^2.3.4",
+		"sequelize": "^6.35.2"
+	},
+	"devDependencies": {
+		"mocha": "^10.2.0"
+	}
+}
