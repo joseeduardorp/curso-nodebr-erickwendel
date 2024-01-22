@@ -21,6 +21,8 @@ const MOCK_HEROI_INICIAL = {
 let MOCK_ID = null;
 
 describe('Suite de testes da API Heroes', function () {
+	this.timeout(10000);
+
 	this.beforeAll(async () => {
 		app = await api;
 

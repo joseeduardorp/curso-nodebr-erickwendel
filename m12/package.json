@@ -1,13 +1,14 @@
 {
-	"name": "multi-environments",
+	"name": "render",
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
 	"scripts": {
 		"test": "mocha src/tests/*.test.js",
 		"test:watch": "mocha src/tests/*.test.js -w",
-		"run:prod": "yarn cross-env NODE_ENV=prod yarn test",
-		"run:dev": "yarn cross-env NODE_ENV=dev yarn test"
+		"test:prod": "yarn cross-env NODE_ENV=prod yarn test",
+		"test:dev": "yarn cross-env NODE_ENV=dev yarn test",
+		"prod": "yarn cross-env NODE_ENV=prod node src/api.js"
 	},
 	"author": "",
 	"license": "ISC",

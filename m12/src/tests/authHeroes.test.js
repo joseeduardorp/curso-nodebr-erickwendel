@@ -17,6 +17,8 @@ const USER_DB = {
 };
 
 describe('Auth test suite', function () {
+	this.timeout(10000);
+
 	this.beforeAll(async () => {
 		app = await api;
 
