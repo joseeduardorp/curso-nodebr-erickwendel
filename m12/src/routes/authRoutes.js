@@ -28,6 +28,7 @@ class AuthRoutes extends BaseRoute {
 			path: '/login',
 			method: 'POST',
 			options: {
+				cors: true,
 				auth: false,
 				tags: ['api'],
 				description: 'Obter token',

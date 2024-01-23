@@ -22,6 +22,7 @@ class HeroRoutes extends BaseRoute {
 			path: '/herois',
 			method: 'GET',
 			options: {
+				cors: true,
 				tags: ['api'],
 				description: 'Deve listar heróis',
 				notes: 'Pode páginar resultados e filtrar por nome',
@@ -55,6 +56,7 @@ class HeroRoutes extends BaseRoute {
 			path: '/herois',
 			method: 'POST',
 			options: {
+				cors: true,
 				tags: ['api'],
 				description: 'Deve cadastrar heróis',
 				notes: 'Pode cadastrar heróis por nome e poder',
@@ -89,6 +91,7 @@ class HeroRoutes extends BaseRoute {
 			path: '/herois/{id}',
 			method: 'PATCH',
 			options: {
+				cors: true,
 				tags: ['api'],
 				description: 'Deve atualizar heróis pelo id',
 				notes: 'Pode atualizar qualquer campo do herói',
@@ -135,6 +138,7 @@ class HeroRoutes extends BaseRoute {
 			path: '/herois/{id}',
 			method: 'DELETE',
 			options: {
+				cors: true,
 				tags: ['api'],
 				description: 'Deve remover heróis pelo id',
 				notes: 'Pode remover um herói',
