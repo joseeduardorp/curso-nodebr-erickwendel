@@ -1,14 +1,14 @@
 {
-	"name": "render",
+	"name": "test-coverage",
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"test": "mocha src/tests/*.test.js",
-		"test:watch": "mocha src/tests/*.test.js -w",
-		"test:prod": "yarn cross-env NODE_ENV=prod yarn test",
-		"test:dev": "yarn cross-env NODE_ENV=dev yarn test",
-		"prod": "yarn cross-env NODE_ENV=prod node src/api.js"
+		"test": "nyc --reporter=html mocha --timeout 10000 --exit src/tests/*.test.js",
+		"test:prod": "npx cross-env NODE_ENV=prod npm run test",
+		"test:dev": "npx cross-env NODE_ENV=dev npm run test",
+		"prod": "npx cross-env NODE_ENV=prod node src/api.js",
+		"postinstall": "npm run test:prod"
 	},
 	"author": "",
 	"license": "ISC",
@@ -30,6 +30,7 @@
 	},
 	"devDependencies": {
 		"cross-env": "^7.0.3",
-		"mocha": "^10.2.0"
+		"mocha": "^10.2.0",
+		"nyc": "^15.1.0"
 	}
 }

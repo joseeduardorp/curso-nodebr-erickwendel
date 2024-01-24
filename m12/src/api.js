@@ -25,6 +25,7 @@ const Context = require('./db/strategies/base/contextStrategy');
 
 const HeroRoutes = require('./routes/heroRoutes');
 const AuthRoutes = require('./routes/authRoutes');
+const UtilRoutes = require('./routes/utilRoutes');
 
 const app = new Hapi.Server({
 	port: process.env.PORT,
@@ -86,6 +87,7 @@ async function main() {
 			new AuthRoutes(JWT_SECRET, postgresContext),
 			AuthRoutes.methods()
 		),
+		...mapRoutes(new UtilRoutes(), UtilRoutes.methods()),
 	]);
 
 	await app.start();
