@@ -11,11 +11,6 @@ const failAction = (request, response, error) => {
 	throw error;
 };
 
-const user = {
-	username: 'joseeduardo',
-	password: 'senha',
-};
-
 class AuthRoutes extends BaseRoute {
 	constructor(secret, db) {
 		super();
@@ -61,17 +56,53 @@ class AuthRoutes extends BaseRoute {
 					return Boom.unauthorized('Usuário ou senha inválidos!');
 				}
 
-				const token = jwt.sign(
-					{
-						username,
-						id: usuario.id,
-					},
-					this.secret
-				);
+				const token = jwt.sign({ id: usuario.id, username }, this.secret);
 
 				return {
 					token,
 				};
+			},
+		};
+	}
+
+	signup() {
+		return {
+			path: '/signup',
+			method: 'POST',
+			options: {
+				cors: true,
+				auth: false,
+				tags: ['api'],
+				description: 'Criar uma conta',
+				notes: 'Cria uma conta com usuário e senha',
+				validate: {
+					failAction,
+					payload: Joi.object({
+						username: Joi.string().required(),
+						password: Joi.string().required(),
+					}),
+				},
+			},
+			handler: async (request, response) => {
+				try {
+					const { username, password } = request.payload;
+
+					const hashedPassword = await PasswordHelper.hashPassword(password);
+
+					const result = await this.db.create({
+						username,
+						password: hashedPassword,
+					});
+
+					const token = jwt.sign({ id: result.id, username }, this.secret);
+
+					return {
+						message: 'Usuário criado com sucesso!',
+						token,
+					};
+				} catch (error) {
+					return Boom.badRequest();
+				}
 			},
 		};
 	}

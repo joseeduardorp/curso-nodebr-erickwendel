@@ -4,7 +4,7 @@ const api = require('../api');
 let app = {};
 
 const TOKEN =
-	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Impvc2VlZHVhcmRvIiwiaWQiOjEsImlhdCI6MTcwNTg2NzkwNH0.FYWDCuOJPFtd7bvMQLOzIbIxiDEDL9vMBEmzwwezMv8';
+	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjQsInVzZXJuYW1lIjoidXNlciIsImlhdCI6MTcwNjMyNDIwMX0.yMna6u3UMLOtg3iSiBC4fPkdD_4LNbgBv58dWuTz6BE';
 
 const headers = {
 	Authorization: TOKEN,
